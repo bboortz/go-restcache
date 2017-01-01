@@ -2,10 +2,7 @@ package restcache
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/julienschmidt/httprouter"
-	"io"
-	"io/ioutil"
 	"net/http"
 	"time"
 	//	"github.com/davecgh/go-spew/spew"
