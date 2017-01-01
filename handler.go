@@ -26,7 +26,7 @@ func HandlerIndexRead(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	if err := json.NewEncoder(w).Encode(result); err != nil {
 		panic(err)
 	}
-	logAccess(getMethodName(), r.Method, r.RequestURI, statusCode, start)
+	LogAccess(r.Method, r.RequestURI, statusCode, start)
 }
 
 /*
@@ -44,7 +44,7 @@ func HandlerAliveRead(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	if err := json.NewEncoder(w).Encode(result); err != nil {
 		panic(err)
 	}
-	logAccess(getMethodName(), r.Method, r.RequestURI, statusCode, start)
+	LogAccess(r.Method, r.RequestURI, statusCode, start)
 }
 
 /*
@@ -56,10 +56,10 @@ func NotFound(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set(headerContentTypeKey, headerContentTypeValue)
 	var statusCode int = http.StatusNotFound
 	w.WriteHeader(statusCode)
-	if err := json.NewEncoder(w).Encode(jsonErr{Code: statusCode, Text: "Not Found"}); err != nil {
+	if err := json.NewEncoder(w).Encode(JsonErr{Code: statusCode, Text: "Not Found"}); err != nil {
 		panic(err)
 	}
-	logAccess(getMethodName(), r.Method, r.RequestURI, statusCode, start)
+	LogAccess(r.Method, r.RequestURI, statusCode, start)
 }
 func NotFoundHandler() http.Handler { return http.HandlerFunc(NotFound) }
 
@@ -68,9 +68,9 @@ func MethodNotAllowed(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set(headerContentTypeKey, headerContentTypeValue)
 	var statusCode int = http.StatusMethodNotAllowed
 	w.WriteHeader(statusCode)
-	if err := json.NewEncoder(w).Encode(jsonErr{Code: statusCode, Text: "Method Not Allowed"}); err != nil {
+	if err := json.NewEncoder(w).Encode(JsonErr{Code: statusCode, Text: "Method Not Allowed"}); err != nil {
 		panic(err)
 	}
-	logAccess(getMethodName(), r.Method, r.RequestURI, statusCode, start)
+	LogAccess(r.Method, r.RequestURI, statusCode, start)
 }
 func MethodNotAllowedHandler() http.Handler { return http.HandlerFunc(MethodNotAllowed) }
