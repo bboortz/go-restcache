@@ -8,7 +8,7 @@ import (
 
 func TestNewRouter(t *testing.T) {
 	assert := assert.New(t)
-	bench := testing.Benchmark(func(b *testing.B) {
+	testing.Benchmark(func(b *testing.B) {
 		router := NewRouter()
 		assert.NotNil(router)
 	})

@@ -119,58 +119,12 @@ func TestHandlerAliveReadMock(t *testing.T) {
 	assert.True(bodyResponse.Alive)
 }
 
-func TestHandlerServiceReadMock(t *testing.T) {
-	assert := assert.New(t)
-	body := genericHandlerApiMock(t, "GET", "/service/go-rnd", 200)
-
-	bodyResponse := Service{}
-	if err := json.Unmarshal(body, &bodyResponse); err != nil {
-		fmt.Println("ERROR: ", err)
-	}
-	assert.NotNil(bodyResponse)
-	assert.NotEmpty(bodyResponse.Id)
-	assert.NotEmpty(bodyResponse.Name)
-	assert.False(bodyResponse.Completed)
-	assert.Empty(bodyResponse.Due)
-}
-
-func TestHandlerServiceReadWrongServiceMock(t *testing.T) {
-	assert := assert.New(t)
-	body := genericHandlerApiMock(t, "GET", "/service/go-rnd2", 404)
-
-	bodyResponse := Service{}
-	if err := json.Unmarshal(body, &bodyResponse); err != nil {
-		fmt.Println("ERROR: ", err)
-	}
-	assert.NotNil(bodyResponse)
-	assert.Empty(bodyResponse.Id)
-	assert.Empty(bodyResponse.Name)
-	assert.False(bodyResponse.Completed)
-	assert.Empty(bodyResponse.Due)
-}
-
-func TestHandlerServicesReadMock(t *testing.T) {
-	assert := assert.New(t)
-	body := genericHandlerApiMock(t, "GET", "/services", 200)
-
-	bodyResponse := Services{}
-	if err := json.Unmarshal(body, &bodyResponse); err != nil {
-		fmt.Println("ERROR: ", err)
-	}
-	assert.NotNil(bodyResponse)
-	/*
-		assert.Empty(bodyResponse.Id)
-		assert.Empty(bodyResponse.Name)
-		assert.False(bodyResponse.Completed)
-		assert.Empty(bodyResponse.Due)
-	*/
-}
-func TestHandlerServiceCreateMock(t *testing.T) {
+func TestHandlerMethodNotAllowedMock(t *testing.T) {
 	assert := assert.New(t)
 	requestStruct := ServiceCreate{Name: "go-test"}
 	requestJson, _ := json.Marshal(requestStruct)
 	requestBody := string(requestJson)
-	body := genericHandlerApiMockWithRequestBody(t, "POST", "/service", 201, strings.NewReader(requestBody))
+	body := genericHandlerApiMockWithRequestBody(t, "POST", "/alive", 405, strings.NewReader(requestBody))
 
 	bodyResponse := Service{}
 	if err := json.Unmarshal(body, &bodyResponse); err != nil {
@@ -183,25 +137,7 @@ func TestHandlerServiceCreateMock(t *testing.T) {
 	assert.Empty(bodyResponse.Due)
 }
 
-func TestHandlerServiceCreateMethodNotAllowedMock(t *testing.T) {
-	assert := assert.New(t)
-	requestStruct := ServiceCreate{Name: "go-test"}
-	requestJson, _ := json.Marshal(requestStruct)
-	requestBody := string(requestJson)
-	body := genericHandlerApiMockWithRequestBody(t, "POST", "/service/go-rnd2", 405, strings.NewReader(requestBody))
-
-	bodyResponse := Service{}
-	if err := json.Unmarshal(body, &bodyResponse); err != nil {
-		fmt.Println("ERROR: ", err)
-	}
-	assert.NotNil(bodyResponse)
-	assert.Empty(bodyResponse.Id)
-	assert.Empty(bodyResponse.Name)
-	assert.False(bodyResponse.Completed)
-	assert.Empty(bodyResponse.Due)
-}
-
-func TestHandlerServiceCreateNotFoundMock(t *testing.T) {
+func TestHandlerNotFoundMock(t *testing.T) {
 	assert := assert.New(t)
 	requestStruct := ServiceCreate{Name: "go-test"}
 	requestJson, _ := json.Marshal(requestStruct)

@@ -1,9 +1,11 @@
 package restcache
 
 import (
-	//	"github.com/op/go-logging"
+	"github.com/op/go-logging"
 	"time"
 )
+
+var log = logging.MustGetLogger("go-router")
 
 func logAccess(route string, method string, uri string, statusCode int, logTime time.Time) {
 	//	var log = logging.MustGetLogger("central-router")
