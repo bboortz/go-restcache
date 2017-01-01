@@ -1,4 +1,4 @@
-package main
+package restcache
 
 type jsonErr struct {
 	Code int    `json:"code"`

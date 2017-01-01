@@ -1,4 +1,4 @@
-package main
+package restcache
 
 import (
 	//	"github.com/op/go-logging"
