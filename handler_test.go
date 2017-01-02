@@ -15,11 +15,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func genericRouterApiTest(t *testing.T, method string, url string, expectedStatusCode int) []byte {
-	return genericRouterApiTestWithRequestBody(t, method, url, expectedStatusCode, nil)
+type TestItemCreate struct {
+	Name string `json:"Name"`
 }
 
-func genericRouterApiTestWithRequestBody(t *testing.T, method string, url string, expectedStatusCode int, requestBody io.Reader) []byte {
+func genericHandlerApiTest(t *testing.T, method string, url string, expectedStatusCode int) []byte {
+	return genericHandlerApiTestWithRequestBody(t, method, url, expectedStatusCode, nil)
+}
+
+func genericHandlerApiTestWithRequestBody(t *testing.T, method string, url string, expectedStatusCode int, requestBody io.Reader) []byte {
 	assert := assert.New(t)
 	router := NewRouter()
 
@@ -40,9 +44,9 @@ func genericRouterApiTestWithRequestBody(t *testing.T, method string, url string
 	return body
 }
 
-func TestRouterIndexRead(t *testing.T) {
+func TestHandlerIndexRead(t *testing.T) {
 	assert := assert.New(t)
-	body := genericRouterApiTest(t, "GET", "/", 200)
+	body := genericHandlerApiTest(t, "GET", "/", 200)
 
 	bodyResponse := Api{}
 	if err := json.Unmarshal(body, &bodyResponse); err != nil {
@@ -53,9 +57,9 @@ func TestRouterIndexRead(t *testing.T) {
 	assert.NotEmpty(bodyResponse.ApiVersion)
 }
 
-func TestRouterAliveRead(t *testing.T) {
+func TestHandlerAliveRead(t *testing.T) {
 	assert := assert.New(t)
-	body := genericRouterApiTest(t, "GET", "/alive", 200)
+	body := genericHandlerApiTest(t, "GET", "/alive", 200)
 
 	bodyResponse := Alive{}
 	if err := json.Unmarshal(body, &bodyResponse); err != nil {
@@ -65,38 +69,33 @@ func TestRouterAliveRead(t *testing.T) {
 	assert.True(bodyResponse.Alive)
 }
 
-func TestRouterMethodNotAllowed(t *testing.T) {
+func TestHandlerMethodNotAllowed(t *testing.T) {
 	assert := assert.New(t)
-	requestStruct := ServiceCreate{Name: "go-test"}
+	requestStruct := TestItemCreate{Name: "go-test"}
 	requestJson, _ := json.Marshal(requestStruct)
 	requestBody := string(requestJson)
-	body := genericRouterApiTestWithRequestBody(t, "POST", "/alive", 405, strings.NewReader(requestBody))
+	body := genericHandlerApiTestWithRequestBody(t, "POST", "/alive", 405, strings.NewReader(requestBody))
 
-	bodyResponse := Service{}
+	bodyResponse := Alive{}
 	if err := json.Unmarshal(body, &bodyResponse); err != nil {
 		fmt.Println("ERROR: ", err)
 	}
 	assert.NotNil(bodyResponse)
-	assert.Empty(bodyResponse.Id)
-	assert.Empty(bodyResponse.Name)
-	assert.False(bodyResponse.Completed)
-	assert.Empty(bodyResponse.Due)
+	assert.Empty(bodyResponse.Alive)
 }
 
-func TestRouterCreateNotFound(t *testing.T) {
+func TestHandlerCreateNotFound(t *testing.T) {
 	assert := assert.New(t)
-	requestStruct := ServiceCreate{Name: "go-test"}
+	requestStruct := TestItemCreate{Name: "go-test"}
 	requestJson, _ := json.Marshal(requestStruct)
 	requestBody := string(requestJson)
-	body := genericRouterApiTestWithRequestBody(t, "POST", "/notfound", 404, strings.NewReader(requestBody))
+	body := genericHandlerApiTestWithRequestBody(t, "POST", "/notfound", 404, strings.NewReader(requestBody))
 
-	bodyResponse := Service{}
+	bodyResponse := Api{}
 	if err := json.Unmarshal(body, &bodyResponse); err != nil {
 		fmt.Println("ERROR: ", err)
 	}
 	assert.NotNil(bodyResponse)
-	assert.Empty(bodyResponse.Id)
-	assert.Empty(bodyResponse.Name)
-	assert.False(bodyResponse.Completed)
-	assert.Empty(bodyResponse.Due)
+	assert.Empty(bodyResponse.ApiName)
+	assert.Empty(bodyResponse.ApiVersion)
 }
