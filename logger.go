@@ -2,6 +2,7 @@ package restcache
 
 import (
 	//	"github.com/davecgh/go-spew/spew"
+	utils "github.com/bboortz/go-utils"
 	"github.com/op/go-logging"
 	"time"
 )
@@ -9,7 +10,7 @@ import (
 var log = logging.MustGetLogger("restcache")
 
 func LogAccess(method string, uri string, statusCode int, logTime time.Time) {
-	route := getMethodName()
+	route := utils.GetCallingMethodName()
 	LogAccessWithRoute(route, method, uri, statusCode, logTime)
 }
 
