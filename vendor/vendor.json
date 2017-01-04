@@ -1,0 +1,43 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "KFhL4DiH0lP4EatsAH4o/temhjI=",
+			"path": "github.com/bboortz/go-restcache",
+			"revision": "3fb79f75ad36cde12422ebf7dffd94b826105dac",
+			"revisionTime": "2017-01-02T22:53:19Z"
+		},
+		{
+			"checksumSHA1": "+DSy5g5Bkt4sabQdpqbPd9gDG0k=",
+			"path": "github.com/bboortz/go-utils",
+			"revision": "dd366251e12f77596cf3ffcc9d7e26eb1ca35119",
+			"revisionTime": "2017-01-04T12:30:16Z"
+		},
+		{
+			"checksumSHA1": "dvabztWVQX8f6oMLRyv4dLH+TGY=",
+			"path": "github.com/davecgh/go-spew/spew",
+			"revision": "346938d642f2ec3594ed81d874461961cd0faa76",
+			"revisionTime": "2016-10-29T20:57:26Z"
+		},
+		{
+			"checksumSHA1": "Y3U6on66N0BszKXYvb2Q+qpG6f4=",
+			"path": "github.com/julienschmidt/httprouter",
+			"revision": "5dd70ee059943e81987a817fa1a755b11dd119c1",
+			"revisionTime": "2016-12-03T08:33:52Z"
+		},
+		{
+			"checksumSHA1": "BoXdUBWB8UnSlFlbnuTQaPqfCGk=",
+			"path": "github.com/op/go-logging",
+			"revision": "970db520ece77730c7e4724c61121037378659d9",
+			"revisionTime": "2016-03-15T20:05:05Z"
+		},
+		{
+			"checksumSHA1": "JXUVA1jky8ZX8w09p2t5KLs97Nc=",
+			"path": "github.com/stretchr/testify/assert",
+			"revision": "2402e8e7a02fc811447d11f881aa9746cdc57983",
+			"revisionTime": "2016-12-17T20:04:45Z"
+		}
+	],
+	"rootPath": "github.com/bboortz/go-restcache"
+}
